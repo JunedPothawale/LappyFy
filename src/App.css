@@ -1,0 +1,12 @@
+.hover-link:hover{
+    color:#0167F3!important
+}
+.hover-bg:hover{
+    background:#0167F3!important;
+    color:#fff;
+    transition: all .3s;
+}
+.white-hover:hover{
+    background:#fff!important;
+    transition: all .3s;
+}
