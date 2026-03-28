@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import logo from '../../assets/images/logo/logo.jpg'
+
 export const searchOptions = [
     { label: "All", value: 0 },
     { label: "Option 01", value: 1 },
@@ -46,7 +48,7 @@ const MiddleHeader = () => {
                     {/* LOGO */}
                     <div className="col-lg-3 col-md-3 col-7">
                         <Link className="navbar-brand" to="/">
-                            <img src="/src/assets/images/logo/logo.jpg" alt="Logo" />
+                            <img src={logo} alt="Logo" />
                         </Link>
                     </div>
 
