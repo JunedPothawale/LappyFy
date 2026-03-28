@@ -1,6 +1,13 @@
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
+import './assets/css/bootstrap.min.css'
+import './assets/css/LineIcons.3.0.css'
+import './assets/css/tiny-slider.css'
+import './assets/css/glightbox.min.css'
+import './assets/css/main.css'
+
+
 
 
 
