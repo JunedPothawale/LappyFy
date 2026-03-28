@@ -1,5 +1,5 @@
 import React from 'react'
-
+import logo from '../../assets/images/logo/white-logo.png'
 const TopFooter = () => {
     return (
         <>
@@ -10,7 +10,7 @@ const TopFooter = () => {
                             <div className="col-lg-3 col-md-4 col-12">
                                 <div className="footer-logo">
                                     <a href="index.html">
-                                        <img src="src\assets\images\logo\white-logo.png" alt="#" />
+                                        <img src={logo} alt="#" />
                                     </a>
                                 </div>
                             </div>
