@@ -6,6 +6,7 @@ import './assets/css/LineIcons.3.0.css'
 import 'tiny-slider/dist/tiny-slider.css'
 import './assets/css/glightbox.min.css'
 import './assets/css/main.css'
+import 'bootstrap/dist/js/bootstrap.min.js'
 
 
 

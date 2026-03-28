@@ -5,6 +5,7 @@ import { lazy, Suspense } from 'react';
 import Preloader from './shared/components/Preloader';
 
 
+
 const Admin = lazy(() => import('./router/AdminRouter'))
 const Customer = lazy(() => import('./router/CustomerRouter'))
 function App() {
