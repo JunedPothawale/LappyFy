@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-
+import { useEffect } from "react";
+import { tns } from "tiny-slider/src/tiny-slider";
 const HeroSection = () => {
 
     const slides = [
@@ -22,7 +22,7 @@ const HeroSection = () => {
     ];
 
     useEffect(() => {
-        const slider = window.tns({
+        const slider = tns({
             container: ".hero-slider",
             items: 1,
             slideBy: "page",

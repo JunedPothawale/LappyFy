@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { tns } from "tiny-slider/src/tiny-slider";
 
 
 const brandsData = [
