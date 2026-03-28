@@ -36,7 +36,7 @@ const Topbar = () => {
     const user = null;
 
     return (
-        <div className="topbar">
+        <div className="topbar d-none d-md-block">
             <div className="container">
                 <div className="row align-items-center">
 
