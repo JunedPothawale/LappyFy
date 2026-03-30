@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
-import Home from '../modules/customer/Home/Home'
+
 import Cart from '../modules/customer/Cart/Cart'
 import FileNotFound from '../shared/components/FileNotFound'
 import Index from '../shared/layouts/CustomerLayout'
@@ -10,6 +10,7 @@ import MailSend from '../shared/components/MailSend'
 import ProductDetails from '../modules/customer/Product/ProductDetails'
 import AboutUs from '../modules/customer/Pages/AboutUs'
 import Product from '../modules/customer/Product/Products'
+import Home from '../modules/customer/Home/pages/Home'
 
 const CustomerRouter = () => {
     return (
