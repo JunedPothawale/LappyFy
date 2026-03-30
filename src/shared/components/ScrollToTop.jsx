@@ -1,10 +1,8 @@
-import React from 'react'
-
 const ScrollToTop = () => {
     return (
         <>
             <a
-                href="https://wa.me/+918421018184"
+                href="https://wa.me/+918421019184"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="position-fixed scroll-top bg-success"

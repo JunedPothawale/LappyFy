@@ -10,3 +10,10 @@
     background:#fff!important;
     transition: all .3s;
 }
+
+.accordion-button.collapsed > .lni{
+    color :#000!important
+}
+.accordion-button .lni{
+    color :#fff!important
+}

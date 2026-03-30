@@ -11,6 +11,7 @@ import ProductDetails from '../modules/customer/Product/ProductDetails'
 import AboutUs from '../modules/customer/Pages/AboutUs'
 import Product from '../modules/customer/Product/Products'
 import Home from '../modules/customer/Home/pages/Home'
+import FaqSection from '../modules/customer/Faqs/FaqSection'
 
 const CustomerRouter = () => {
     return (
@@ -25,6 +26,7 @@ const CustomerRouter = () => {
                     <Route path='/product-details' element={<ProductDetails />}></Route>
                     <Route path='/product' element={<Product />}></Route>
                     <Route path='/about' element={<AboutUs />}></Route>
+                    <Route path='/faqs' element={<FaqSection />}></Route>
                     <Route path="*" element={<Navigate to="/not-found" replace />} />
                 </Route>
                 <Route path='/not-found' element={<FileNotFound />}></Route>

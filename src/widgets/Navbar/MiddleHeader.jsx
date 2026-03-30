@@ -29,7 +29,7 @@ export const cartItems = [
     }
 ];
 
-export const hotline = "+91 842 101 8184";
+export const hotline = "+91 842 101 9184";
 
 
 
