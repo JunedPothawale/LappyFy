@@ -6,7 +6,7 @@ const MiddleFooter = () => {
     const data = {
         contact: {
             title: "Get In Touch With Us",
-            phone: "+91 842 101 8184",
+            phone: "+91 842 101 9184",
             timings: [
                 { label: "Monday-Friday", value: "9.00 am - 8.00 pm" },
                 { label: "Saturday", value: "10.00 am - 6.00 pm" }
