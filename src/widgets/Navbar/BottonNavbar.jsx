@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 
 
@@ -70,16 +71,16 @@ const Navbar = () => {
                                 <ul className="sub-category">
                                     {categories.map((cat, i) => (
                                         <li key={i}>
-                                            <a className="all-category-font" href={cat.link}>
+                                            <Link className="all-category-font" to={cat.link}>
                                                 {cat.name}
                                                 {cat.children && <i className="lni lni-chevron-right"></i>}
-                                            </a>
+                                            </Link>
 
                                             {cat.children && (
                                                 <ul className="inner-sub-category">
                                                     {cat.children.map((sub, j) => (
                                                         <li key={j}>
-                                                            <a href={sub.link}>{sub.name}</a>
+                                                            <Link to={sub.link}>{sub.name}</Link>
                                                         </li>
                                                     ))}
                                                 </ul>
@@ -109,7 +110,7 @@ const Navbar = () => {
                                             <li className="nav-item" key={i}>
 
                                                 {!item.children ? (
-                                                    <a href={item.link}>{item.name}</a>
+                                                    <Link to={item.link}>{item.name}</Link>
                                                 ) : (
                                                     <>
                                                         <a
@@ -123,7 +124,7 @@ const Navbar = () => {
                                                         <ul className="sub-menu collapse" id={`submenu-${i}`}>
                                                             {item.children.map((sub, j) => (
                                                                 <li key={j}>
-                                                                    <a href={sub.link}>{sub.name}</a>
+                                                                    <Link to={sub.link}>{sub.name}</Link>
                                                                 </li>
                                                             ))}
                                                         </ul>
@@ -147,9 +148,9 @@ const Navbar = () => {
                             <ul>
                                 {socialLinks.map((social, i) => (
                                     <li key={i}>
-                                        <a href={social.link}>
+                                        <Link to={social.link}>
                                             <i className={`lni ${social.icon}`}></i>
-                                        </a>
+                                        </Link>
                                     </li>
                                 ))}
                             </ul>
