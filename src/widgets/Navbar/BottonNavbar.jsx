@@ -2,25 +2,30 @@
 
 
 export const categories = [
-    {
-        name: "Buy", link: "/", children: [
-            { name: "Laptop", link: "/" },
-            { name: "Desktop", link: "/" }
-        ]
-    },
-    { name: "Rent", link: "/" },
-    { name: "Repair", link: "/" },
-    { name: "Earn", link: "/" }
+    // {
+    //     name: "Buy", link: "/", children: [
+    //         { name: "Laptop", link: "/product" },
+    //         { name: "Desktop", link: "/product" }
+    //     ]
+    // },
+    { name: "Buy", link: "/product" },
+    { name: "Sell", link: "/product" },
+    { name: "Rent", link: "/product" },
+    { name: "Repair", link: "/product" },
+    { name: "Earn", link: "/product" },
+    { name: "Support", link: "/support" },
 ];
 
 export const navMenu = [
     { name: "Home", link: "/" },
-    { name: "Buy", link: "/" },
-    { name: "Rent", link: "/" },
-    { name: "Repair", link: "/" },
-    { name: "Earn", link: "/" },
-    { name: "Support", link: "/" },
-    { name: "Contact Us", link: "/contact" }
+    {
+        name: "Buy", link: "/product"
+    },
+    { name: "Sell", link: "/product" },
+    { name: "Rent", link: "/product" },
+    { name: "Repair", link: "/product" },
+    { name: "Earn", link: "/product" },
+    { name: "Support", link: "/support" },
 ];
 // {
 //     name: "Shop",
@@ -65,7 +70,7 @@ const Navbar = () => {
                                 <ul className="sub-category">
                                     {categories.map((cat, i) => (
                                         <li key={i}>
-                                            <a href={cat.link}>
+                                            <a className="all-category-font" href={cat.link}>
                                                 {cat.name}
                                                 {cat.children && <i className="lni lni-chevron-right"></i>}
                                             </a>
@@ -152,7 +157,7 @@ const Navbar = () => {
                     </div>
 
                 </div>
-            </div>
+            </div >
 
         </>
     )

@@ -1,4 +1,6 @@
-const products = [
+import { createSlice } from '@reduxjs/toolkit'
+
+const initialState = [
   {
     id: 1,
     name: "Xiaomi Mi Band 5",
@@ -53,4 +55,15 @@ const products = [
   }
 ];
 
-export default products;
+
+export const cartSlice = createSlice({
+  name: 'carts',
+  initialState: initialState,
+  reducers: {
+  },
+})
+
+// Action creators are generated for each case reducer function
+export const { } = cartSlice.actions
+
+export default cartSlice.reducer

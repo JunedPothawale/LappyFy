@@ -35,7 +35,7 @@ const featuredProduct = {
     oldPrice: 400,
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
     image: "https://placehold.co/510x600",
-    endDate: "2026-03-31T14:19:00+05:30"
+    endDate: "2026-03-31T16:30:00+05:30"
 };
 
 const banner = {

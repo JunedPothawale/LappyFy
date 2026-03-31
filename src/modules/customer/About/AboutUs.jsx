@@ -1,3 +1,4 @@
+import Breadcrumbs from "../../../widgets/Breadcrumbs";
 
 const teamData = [
     {
@@ -33,6 +34,8 @@ const teamData = [
 const AboutUs = () => {
     return (
         <>
+
+            <Breadcrumbs title="Cart" paths={[{ name: "About Us" }]} />
             {/* Start About Area */}
             <section className="about-us section">
                 <div className="container">

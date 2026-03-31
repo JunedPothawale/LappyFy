@@ -1,6 +1,6 @@
 # 📁 Project Structure (React + Vite | Microservice Ready)
 
-This project follows a **modular, scalable, and microservice-aligned architecture**. Each domain is isolated into its own module, making the application easy to maintain and extend.
+This project follows a **modular, scalable, and microservice-aligned architecture**. Each domain is isolated into its own module, making the application easy to maintain, test, and extend.
 
 ---
 
@@ -9,64 +9,85 @@ This project follows a **modular, scalable, and microservice-aligned architectur
 ```
 src/
 │
-├── app/                          # App bootstrap & routing
+├── app/                          # App bootstrap & global orchestration
 │   ├── App.jsx
 │   ├── main.jsx
 │   ├── routes.jsx               # Central route definitions
-│   └── providers/               # Context providers (Auth, Theme, etc.)
+│   │
+│   ├── providers/               # Global providers
+│   │   ├── ReduxProvider.jsx
+│   │   └── (AuthProvider, ThemeProvider, etc.)
+│   │
+│   └── store/                   # 🔥 Redux global setup
+│       ├── store.js
+│       ├── rootReducer.js
+│       ├── persistConfig.js
 │
 ├── config/                      # Environment & API configuration
 │   ├── env.js                   # import.meta.env wrapper
 │   └── api.config.js            # API endpoints mapping
 │
 ├── shared/                      # Global reusable layer
-│   ├── components/              # Reusable UI components (Button, Input, Modal)
-│   ├── layouts/                 # Layouts (MainLayout, AdminLayout, AuthLayout)
-│   ├── hooks/                   # Custom hooks (useAuth, useFetch)
+│   ├── components/              # Reusable UI components
+│   ├── layouts/                 # Layouts (MainLayout, AdminLayout)
+│   ├── hooks/                   # Custom hooks
 │   ├── utils/                   # Utility functions
-│   └── services/                # Axios / API base setup
+│   │   └── validators.js        # Generic validators only
+│   └── services/                # 🔥 API base setup (Axios)
+│       └── apiClient.js
 │
 ├── modules/                     # Domain-based modules (Microservice aligned)
 │   │
-│   ├── auth/                    # Authentication module
+│   ├── auth/
+│   │   ├── pages/
+│   │   ├── components/
+│   │   ├── api/                 # 🔥 API calls
+│   │   │   └── authApi.js
+│   │   ├── store/               # 🔥 Redux slice
+│   │   │   └── authSlice.js
+│   │   ├── validation/          # 🔥 Validation schemas
+│   │   │   └── authValidation.js
+│   │   └── hooks/
+│   │
+│   ├── product/
 │   │   ├── pages/
 │   │   ├── components/
 │   │   ├── api/
+│   │   ├── store/
+│   │   ├── validation/
 │   │   └── hooks/
 │   │
-│   ├── product/                 # Product module
+│   ├── cart/
 │   │   ├── pages/
 │   │   ├── components/
 │   │   ├── api/
-│   │   └── hooks/
+│   │   ├── store/
+│   │   └── validation/
 │   │
-│   ├── cart/                    # Cart module
+│   ├── order/
 │   │   ├── pages/
 │   │   ├── components/
 │   │   ├── api/
-│   │   └── hooks/
+│   │   └── validation/
 │   │
-│   ├── order/                   # Order module
+│   ├── admin/
 │   │   ├── pages/
 │   │   ├── components/
-│   │   └── api/
+│   │   ├── api/
+│   │   └── validation/
 │   │
-│   ├── admin/                   # Admin panel
-│   │   ├── pages/
-│   │   ├── components/
-│   │   └── api/
-│   │
-│   └── customer/                # Customer-facing module
+│   └── customer/
 │       ├── pages/
 │       ├── components/
-│       └── api/
+│       ├── api/
+│       └── validation/
 │
-├── widgets/                     # Large UI blocks (Header, Footer, Breadcrumbs)
+├── widgets/                     # Large UI blocks
 │   ├── Header/
 │   ├── Footer/
 │   └── Breadcrumbs/
 │
-├── assets/                      # Static assets (images, icons, styles)
+├── assets/                      # Static assets
 │   ├── images/
 │   ├── icons/
 │   └── styles/
@@ -78,20 +99,22 @@ src/
 
 ## 🧠 Architecture Principles
 
-* **Domain-Based Structure**
-  Each module represents a business domain (auth, cart, product, etc.)
+### 🔹 Domain-Based Structure
 
-* **Microservice Alignment**
-  Frontend modules map directly to backend services
+Each module represents a business domain (auth, product, cart, etc.)
 
-* **Separation of Concerns**
+### 🔹 Microservice Alignment
 
-  * `shared/` → reusable logic
-  * `modules/` → business logic
-  * `widgets/` → UI sections
+Frontend modules map directly to backend services
 
-* **Scalability**
-  Easy to add new modules without affecting existing ones
+### 🔹 Separation of Concerns
+
+| Layer      | Responsibility                  |
+| ---------- | ------------------------------- |
+| `app/`     | App bootstrap, Redux, providers |
+| `modules/` | Business logic                  |
+| `shared/`  | Reusable/global logic           |
+| `widgets/` | UI sections                     |
 
 ---
 
@@ -106,9 +129,105 @@ src/
 
 ---
 
-## ⚙️ Environment Setup
+# 🗂️ State Management (Redux + Persist)
 
-Environment variables are managed using Vite:
+## 📍 Location
+
+```
+app/store/
+```
+
+## 📦 Responsibilities
+
+* `store.js` → Configure Redux store
+* `rootReducer.js` → Combine module reducers
+* `persistConfig.js` → Configure persistence
+
+## 🧩 Slice Placement
+
+```
+modules/*/store/*.js
+```
+
+👉 Each module owns its own state
+
+---
+
+# 🌐 API Architecture
+
+## 📍 API Calls Location
+
+```
+modules/*/api/
+```
+
+👉 Each module handles its own API calls
+
+## 📍 Shared API Client
+
+```
+shared/services/apiClient.js
+```
+
+👉 Contains:
+
+* Axios instance
+* Base URL
+* Interceptors (Auth token, etc.)
+
+---
+
+## 🔄 API Flow
+
+```
+Component
+   ↓
+Redux Thunk
+   ↓
+Module API
+   ↓
+Shared API Client
+   ↓
+Backend
+```
+
+---
+
+# ✅ Validation Architecture
+
+## 📍 Validation Location
+
+```
+modules/*/validation/
+```
+
+👉 Each module defines its own validation rules
+
+## 🧩 Example
+
+```
+modules/auth/validation/authValidation.js
+```
+
+## 📍 Usage
+
+* UI Forms → Primary validation
+* Redux Thunk → Optional safety validation
+* Backend → Final validation (mandatory)
+
+---
+
+## 🔁 Validation Responsibility
+
+| Layer             | Role             |
+| ----------------- | ---------------- |
+| Module Validation | Business rules   |
+| UI                | User feedback    |
+| Backend           | Final validation |
+
+---
+
+# ⚙️ Environment Setup
 
 ```
 .env.development
@@ -126,7 +245,7 @@ VITE_CART=/cart
 
 ---
 
-## 🚀 Development
+# 🚀 Development
 
 ```
 npm install
@@ -135,7 +254,7 @@ npm run dev
 
 ---
 
-## 🏗️ Build
+# 🏗️ Build
 
 ```
 npm run build
@@ -144,22 +263,44 @@ npm run preview
 
 ---
 
-## 📌 Best Practices
+# 📌 Best Practices
 
-* Keep modules isolated (no cross-module dependency)
-* Use `shared/` only for reusable logic
-* Store API logic inside each module (`modules/*/api`)
-* Use layouts with `<Outlet />` for page composition
+### ✅ Do
+
+* Keep modules isolated
+* Keep API inside modules
+* Keep validation inside modules
+* Use shared only for reusable logic
+* Persist only necessary state (auth, cart)
+
+### ❌ Avoid
+
+* Cross-module dependencies
+* API calls inside components
+* Validation inside Redux slices
+* Business logic inside shared/
 
 ---
 
-## 🎯 Summary
+# 🎯 Summary
 
 This architecture ensures:
 
-* Clean code organization
+* Clean and maintainable codebase
+* Strong separation of concerns
 * High scalability
 * Microservice compatibility
-* Easy team collaboration
+* Team-friendly structure
+
+---
+
+## 🚀 Future Ready
+
+This setup is ready for:
+
+* RTK Query integration
+* SSR / Next.js migration
+* Micro-frontend scaling
+* Large team collaboration
 
 ---

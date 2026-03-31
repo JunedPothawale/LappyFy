@@ -5,7 +5,7 @@ const ScrollToTop = () => {
                 href="https://wa.me/+918421019184"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="position-fixed scroll-top bg-success"
+                className="position-fixed scroll-whatsapp bg-success"
                 style={{ zIndex: 999, bottom: "5rem" }}
             >
                 <i className="lni lni-whatsapp fs-4"></i>
