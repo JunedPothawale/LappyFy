@@ -8,10 +8,11 @@ import Register from '../modules/customer/Auth/Register'
 import Checkout from '../modules/customer/Checkout/Checkout'
 import MailSend from '../shared/components/MailSend'
 import ProductDetails from '../modules/customer/Product/ProductDetails'
-import AboutUs from '../modules/customer/Pages/AboutUs'
+import AboutUs from '../modules/customer/About/AboutUs'
 import Product from '../modules/customer/Product/Products'
 import Home from '../modules/customer/Home/pages/Home'
 import FaqSection from '../modules/customer/Faqs/FaqSection'
+import ContactSection from '../modules/customer/Contact/ContactSection'
 
 const CustomerRouter = () => {
     return (
@@ -27,6 +28,7 @@ const CustomerRouter = () => {
                     <Route path='/product' element={<Product />}></Route>
                     <Route path='/about' element={<AboutUs />}></Route>
                     <Route path='/faqs' element={<FaqSection />}></Route>
+                    <Route path='/contact' element={<ContactSection />}></Route>
                     <Route path="*" element={<Navigate to="/not-found" replace />} />
                 </Route>
                 <Route path='/not-found' element={<FileNotFound />}></Route>

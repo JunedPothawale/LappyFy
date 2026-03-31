@@ -10,7 +10,7 @@ const Cart = () => {
         {
             id: 1,
             name: "Canon EOS M50 Mirrorless Camera",
-            image: "https://via.placeholder.com/220x200",
+            image: "https://placehold.co/220x200",
             type: "Mirrorless",
             color: "Black",
             price: 910,
@@ -20,7 +20,7 @@ const Cart = () => {
         {
             id: 2,
             name: "Apple iPhone X 256 GB Space Gray",
-            image: "https://via.placeholder.com/220x200",
+            image: "https://placehold.co/220x200",
             memory: "256 GB",
             color: "Space Gray",
             price: 1100,
@@ -30,7 +30,7 @@ const Cart = () => {
         {
             id: 3,
             name: "HP LaserJet Pro Laser Printer",
-            image: "https://via.placeholder.com/220x200",
+            image: "https://placehold.co/220x200",
             type: "Laser",
             color: "White",
             price: 550,

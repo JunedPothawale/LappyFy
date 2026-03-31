@@ -3,11 +3,11 @@ import logo from '../../assets/images/logo/logo.jpg'
 
 export const searchOptions = [
     { label: "All", value: 0 },
-    { label: "Option 01", value: 1 },
-    { label: "Option 02", value: 2 },
-    { label: "Option 03", value: 3 },
-    { label: "Option 04", value: 4 },
-    { label: "Option 05", value: 5 }
+    // { label: "Option 01", value: 1 },
+    // { label: "Option 02", value: 2 },
+    // { label: "Option 03", value: 3 },
+    // { label: "Option 04", value: 4 },
+    // { label: "Option 05", value: 5 }
 ];
 
 export const cartItems = [

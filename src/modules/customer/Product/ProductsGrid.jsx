@@ -21,7 +21,7 @@ const ProductGrid = ({ products }) => {
 
                             {/* HOVER BUTTON */}
                             <div className="button">
-                                <a href="#" className="btn">
+                                <a href="/cart" className="btn">
                                     <i className="lni lni-cart"></i> Add to Cart
                                 </a>
                             </div>
