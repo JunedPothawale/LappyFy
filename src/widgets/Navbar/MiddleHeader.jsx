@@ -1,45 +1,35 @@
 import { Link } from "react-router-dom";
-import logo from '../../assets/images/logo/logo.jpg'
+import logo from "../../assets/images/logo/logo.jpg";
+
+import { useDispatch, useSelector } from "react-redux";
+import { removeItem } from "../../modules/customer/Cart/Slicer/cartSlice";
 
 export const searchOptions = [
-    { label: "All", value: 0 },
-    // { label: "Option 01", value: 1 },
-    // { label: "Option 02", value: 2 },
-    // { label: "Option 03", value: 3 },
-    // { label: "Option 04", value: 4 },
-    // { label: "Option 05", value: 5 }
-];
-
-export const cartItems = [
-    {
-        id: 1,
-        name: "Apple Watch Series 6",
-        price: 99,
-        quantity: 1,
-        image: "/src/assets/images/header/cart-items/item1.jpg",
-        link: "/product/apple-watch"
-    },
-    {
-        id: 2,
-        name: "Wi-Fi Smart Camera",
-        price: 35,
-        quantity: 1,
-        image: "/src/assets/images/header/cart-items/item2.jpg",
-        link: "/product/camera"
-    }
+    { label: "All", value: 0 }
 ];
 
 export const hotline = "+91 842 101 9184";
 
-
-
 const MiddleHeader = () => {
-    const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+    const dispatch = useDispatch();
 
-    const totalAmount = cartItems.reduce(
-        (acc, item) => acc + item.price * item.quantity,
+    // ✅ get cart from redux
+    const { cartItems } = useSelector((state) => state.cart);
+
+    // ✅ safe array (VERY IMPORTANT)
+    const items = Array.isArray(cartItems) ? cartItems : [];
+
+    // ✅ calculations
+    const totalItems = items.reduce(
+        (acc, item) => acc + (item.quantity || 1),
         0
     );
+
+    const totalAmount = items.reduce(
+        (acc, item) => acc + item.price * (item.quantity || 1),
+        0
+    );
+
     return (
         <div className="header-middle">
             <div className="container">
@@ -122,40 +112,51 @@ const MiddleHeader = () => {
                                         </div>
 
                                         <ul className="shopping-list">
-                                            {cartItems.map((item) => (
-                                                <li key={item.id}>
+                                            {items.length === 0 ? (
+                                                <li style={{ padding: "10px" }}>Cart is empty</li>
+                                            ) : (
+                                                items.map((item) => (
+                                                    <li key={item.id}>
 
-                                                    <button className="remove">
-                                                        <i className="lni lni-close"></i>
-                                                    </button>
+                                                        {/* REMOVE BUTTON */}
+                                                        <button
+                                                            className="remove"
+                                                            onClick={() => dispatch(removeItem(item.id))}
+                                                        >
+                                                            <i className="lni lni-close"></i>
+                                                        </button>
 
-                                                    <div className="cart-img-head">
-                                                        <Link className="cart-img" to={item.link}>
-                                                            <img src={item.image} alt={item.name} />
-                                                        </Link>
-                                                    </div>
+                                                        {/* IMAGE */}
+                                                        <div className="cart-img-head">
+                                                            <Link className="cart-img" to="/product">
+                                                                <img src={item.image} alt={item.name} />
+                                                            </Link>
+                                                        </div>
 
-                                                    <div className="content">
-                                                        <h4>
-                                                            <Link to={item.link}>{item.name}</Link>
-                                                        </h4>
-                                                        <p className="quantity">
-                                                            {item.quantity}x -{" "}
-                                                            <span className="amount">
-                                                                ${item.price.toFixed(2)}
-                                                            </span>
-                                                        </p>
-                                                    </div>
+                                                        {/* CONTENT */}
+                                                        <div className="content">
+                                                            <h4>
+                                                                <Link to="/product">{item.name}</Link>
+                                                            </h4>
+                                                            <p className="quantity">
+                                                                {item.quantity || 1}x -{" "}
+                                                                <span className="amount">
+                                                                    ₹{item.price}
+                                                                </span>
+                                                            </p>
+                                                        </div>
 
-                                                </li>
-                                            ))}
+                                                    </li>
+                                                ))
+                                            )}
                                         </ul>
 
+                                        {/* TOTAL */}
                                         <div className="bottom">
                                             <div className="total">
                                                 <span>Total</span>
                                                 <span className="total-amount">
-                                                    ${totalAmount.toFixed(2)}
+                                                    ₹{totalAmount.toFixed(2)}
                                                 </span>
                                             </div>
 
@@ -180,4 +181,4 @@ const MiddleHeader = () => {
     );
 };
 
-export default MiddleHeader
+export default MiddleHeader;

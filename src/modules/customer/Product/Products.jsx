@@ -2,24 +2,26 @@ import { useState, useMemo, useEffect } from "react";
 import ProductGrid from "./ProductsGrid";
 import ProductList from "./ProductsList";
 import Breadcrumbs from "../../../widgets/Breadcrumbs";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import products from "../../../shared/Data";
+import { setView } from "./Slice/UiSlice";
 
 
 
 const Product = () => {
 
+    const view = useSelector((state) => state.ui.view);
 
+    const dispatch = useDispatch();
+    // const [view, setView] = useState("grid");
 
-
-    const [view, setView] = useState("grid");
     // PAGINATION
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     // FILTER STATES
     const [search, setSearch] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
-    const [priceRange, setPriceRange] = useState(100000);
+    const [priceRange, setPriceRange] = useState(10000000);
     const [selectedPrices, setSelectedPrices] = useState([]);
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [sort, setSort] = useState("popularity");
@@ -218,15 +220,15 @@ const Product = () => {
                                         type="range"
                                         className="form-range custom-range"
                                         min="0"
-                                        max="10000"
-                                        step="100"
+                                        max="10000000"
+                                        step="1000"
                                         value={priceRange}
                                         onChange={(e) => setPriceRange(Number(e.target.value))}
                                     />
 
                                     <div className="range-inner">
-                                        <label>$</label>
-                                        <input type="text" value={priceRange} readOnly />
+                                        <label>₹</label>
+                                        <input className="border-0" type="text" value={priceRange} readOnly />
                                     </div>
                                 </div>
 
@@ -318,14 +320,14 @@ const Product = () => {
                                             </button>
                                             <button
                                                 className={`nav-link ${view === "grid" ? "active" : ""}`}
-                                                onClick={() => setView("grid")}
+                                                onClick={() => dispatch(setView("grid"))}
                                             >
                                                 <i className="lni lni-grid-alt"></i>
                                             </button>
 
                                             <button
                                                 className={`nav-link ${view === "list" ? "active" : ""}`}
-                                                onClick={() => setView("list")}
+                                                onClick={() => dispatch(setView("list"))}
                                             >
                                                 <i className="lni lni-list"></i>
                                             </button>

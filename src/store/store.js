@@ -3,6 +3,7 @@ import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } fro
 
 import rawStorage from "redux-persist/lib/storage";
 import cartReducer from "../modules/customer/Cart/Slicer/cartSlice"
+import UiReducer from "../modules/customer/Product/Slice/UiSlice"
 const storage = rawStorage.default || rawStorage;
 
 
@@ -13,7 +14,8 @@ const persistConfig = {
 }
 
 const reducer = combineReducers({
-    cart: cartReducer
+    cart: cartReducer,
+    ui: UiReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)
