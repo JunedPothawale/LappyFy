@@ -1,7 +1,27 @@
-import React, { useState } from "react";
+import { useState, useRef } from "react";
+import { addItem } from "../Cart/Slicer/cartSlice";
+import products from "../../../shared/Data";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import ImageZoom from "../../../shared/components/ImageZoom";
+import { handleShare } from "../../../shared/utils/shareProduct";
+
 
 const ProductDetails = () => {
-    const images = [
+
+
+
+
+
+    const dispatch = useDispatch()
+
+
+    const { id } = useParams()
+    const product = Array.isArray(products)
+        ? products.find((p) => p.id === Number(id))
+        : null;
+
+    const images = product.images || [
         "https://placehold.co/1000x670",
         "https://placehold.co/1000x670",
         "https://placehold.co/1000x670",
@@ -9,7 +29,9 @@ const ProductDetails = () => {
         "https://placehold.co/1000x670",
     ];
 
+
     const [current, setCurrent] = useState(images[0]);
+
 
     return (
         <section className="item-details section">
@@ -23,9 +45,12 @@ const ProductDetails = () => {
                             <div className="product-images">
                                 <main id="gallery">
 
-                                    <div className="main-img">
-                                        <img src={current} id="current" alt="" />
+
+
+                                    <div className="main-img" >
+                                        <ImageZoom src={current} id="current" alt="" />
                                     </div>
+
 
                                     <div className="images">
                                         {images.map((img, i) => (
@@ -46,53 +71,59 @@ const ProductDetails = () => {
                         {/* RIGHT */}
                         <div className="col-lg-6 col-md-12 col-12">
                             <div className="product-info">
-
-                                <h2 className="title">GoPro Karma Camera Drone</h2>
-
+                                <h2 className="title fs-1">{product.name}</h2>
                                 <p className="category">
-                                    <i className="lni lni-tag"></i> Drones:
-                                    <a href="#">Action cameras</a>
+                                    <i className="lni lni-tag"></i>
+                                    Brand:
+                                    <a className="fs-6">{product.brand}</a>
                                 </p>
 
-                                <h3 className="price">
-                                    $850 <span>$945</span>
-                                </h3>
+                                <div className="price-section">
+                                    {/* Discount + Price */}
+                                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
 
-                                <p className="info-text">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                </p>
+                                        {/* Discount % */}
+                                        {product.oldPrice && (
+                                            <span style={{ color: "red", fontSize: "15px", fontWeight: "600" }}>
+                                                -{Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}%
+                                            </span>
+                                        )}
 
-                                <div className="row">
-
-                                    {/* COLOR */}
-                                    <div className="col-lg-4 col-md-4 col-12">
-                                        <div className="form-group color-option">
-                                            <label className="title-label">Choose color</label>
-
-                                            <div className="single-checkbox checkbox-style-1">
-                                                <input type="checkbox" id="c1" />
-                                                <label htmlFor="c1"><span></span></label>
-                                            </div>
-
-                                            <div className="single-checkbox checkbox-style-2">
-                                                <input type="checkbox" id="c2" />
-                                                <label htmlFor="c2"><span></span></label>
-                                            </div>
-
-                                            <div className="single-checkbox checkbox-style-3">
-                                                <input type="checkbox" id="c3" />
-                                                <label htmlFor="c3"><span></span></label>
-                                            </div>
-
-                                            <div className="single-checkbox checkbox-style-4">
-                                                <input type="checkbox" id="c4" />
-                                                <label htmlFor="c4"><span></span></label>
-                                            </div>
-                                        </div>
+                                        {/* Current Price */}
+                                        <span className="fs-2" style={{ color: "black", fontSize: "", fontWeight: "700" }}>
+                                            ₹{product.price}
+                                        </span>
                                     </div>
 
-                                    {/* BATTERY */}
+                                    {/* MRP */}
+                                    {product.oldPrice && (
+                                        <p style={{ color: "#666", fontSize: "14px" }}>
+                                            M.R.P.:{" "}
+                                            <span style={{ textDecoration: "line-through" }}>
+                                                ₹{product.oldPrice}
+                                            </span>
+                                        </p>
+                                    )}
+
+                                    {/* Tax text */}
+                                    <p style={{ fontSize: "14px", color: "#444" }}>
+                                        Inclusive of all taxes
+                                    </p>
+
+                                </div>
+
+                                <div className="about-item">
+                                    <p className="text-dark fs-5 my-3">
+                                        About This Item
+                                    </p>
+                                    <p className="info-text">
+                                        {product.discription}
+                                    </p>
+                                </div>
+
+                                <div className="row">
                                     <div className="col-lg-4 col-md-4 col-12">
+                                        {/* <div className="col-lg-4 col-md-4 col-12">
                                         <div className="form-group">
                                             <label>Battery capacity</label>
                                             <select className="form-control">
@@ -101,23 +132,15 @@ const ProductDetails = () => {
                                                 <option>8000 mAh</option>
                                             </select>
                                         </div>
+                                    </div> */}
                                     </div>
-
-                                    {/* QUANTITY */}
-                                    <div className="col-lg-4 col-md-4 col-12">
-                                        <div className="form-group quantity">
-                                            <label>Quantity</label>
-                                            <select className="form-control">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
                                 </div>
+
+
+
+
+
+
 
                                 {/* BUTTONS */}
                                 <div className="bottom-content">
@@ -125,7 +148,7 @@ const ProductDetails = () => {
 
                                         <div className="col-lg-4 col-md-4 col-12">
                                             <div className="button cart-button">
-                                                <button className="btn" style={{ width: "100%" }}>
+                                                <button onClick={() => dispatch(addItem(product))} className="btn" style={{ width: "100%" }}>
                                                     Add to Cart
                                                 </button>
                                             </div>
@@ -133,19 +156,19 @@ const ProductDetails = () => {
 
                                         <div className="col-lg-4 col-md-4 col-12">
                                             <div className="wish-button">
-                                                <button className="btn">
-                                                    <i className="lni lni-reload"></i> Compare
+                                                <button className="btn" onClick={() => handleShare(product)}>
+                                                    <i className="lni lni-share"></i> Share to Friend
                                                 </button>
                                             </div>
                                         </div>
 
-                                        <div className="col-lg-4 col-md-4 col-12">
+                                        {/* <div className="col-lg-4 col-md-4 col-12">
                                             <div className="wish-button">
                                                 <button className="btn">
                                                     <i className="lni lni-heart"></i> To Wishlist
                                                 </button>
                                             </div>
-                                        </div>
+                                        </div> */}
 
                                     </div>
                                 </div>
@@ -292,7 +315,7 @@ const ProductDetails = () => {
                 </div>
 
             </div>
-        </section>
+        </section >
     );
 };
 

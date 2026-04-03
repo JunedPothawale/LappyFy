@@ -10,8 +10,8 @@ const ScrollToTop = () => {
             >
                 <i className="lni lni-whatsapp fs-4"></i>
             </a>
-            <a href="#" class="scroll-top">
-                <i class="lni lni-chevron-up"></i>
+            <a href="#" className="scroll-top">
+                <i className="lni lni-chevron-up"></i>
             </a>
         </>
     )

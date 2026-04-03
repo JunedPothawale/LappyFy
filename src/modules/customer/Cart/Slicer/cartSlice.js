@@ -1,69 +1,114 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = [
-  {
-    id: 1,
-    name: "Xiaomi Mi Band 5",
-    category: "Watches",
-    price: 199,
-    rating: 4,
-    image: "https://placehold.co/600x600",
-    brand: "Apple",
-    isNew: true
-  },
-  {
-    id: 2,
-    name: "Bluetooth Speaker",
-    category: "Speaker",
-    price: 275,
-    oldPrice: 300,
-    rating: 5,
-    image: "https://placehold.co/600x600",
-    brand: "LG Electronics",
-    isNew: true
-  },
-  {
-    id: 3,
-    name: "WiFi Security Camera",
-    category: "Camera",
-    price: 399,
-    rating: 5,
-    image: "https://placehold.co/600x600",
-    brand: "Canon Inc.",
-    isNew: true
-  },
-  {
-    id: 4,
-    name: "iphone 6x plus",
-    category: "Phones",
-    price: 400,
-    rating: 5,
-    image: "https://placehold.co/600x600",
-    brand: "Apple",
-    isNew: false
-  },
-  {
-    id: 5,
-    name: "Wireless Headphones",
-    category: "Headphones",
-    price: 100,
-    oldPrice: 200,
-    rating: 4,
-    image: "https://placehold.co/600x600",
-    brand: "Bosh",
-    isNew: false
-  }
-];
-
+const initialState = {
+  cartItems: [],
+  totalProducts: 0,
+  totalQuantity: 0,
+  totalAmount: 0
+};
 
 export const cartSlice = createSlice({
-  name: 'carts',
-  initialState: initialState,
+  name: "cart",
+  initialState,
   reducers: {
-  },
-})
+    // ✅ ADD ITEM
+    addItem: (state, action) => {
+      const item = action.payload;
 
-// Action creators are generated for each case reducer function
-export const { } = cartSlice.actions
+      if (!state.cartItems) state.cartItems = [];
 
-export default cartSlice.reducer
+      const existingItem = state.cartItems.find(
+        (i) => i.id === item.id
+      );
+
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        state.cartItems.push({
+          ...item,
+          quantity: 1
+        });
+      }
+
+      // 🔁 recalc totals (best approach)
+      recalcCart(state);
+    },
+
+    // ✅ REMOVE ITEM COMPLETELY
+    removeItem: (state, action) => {
+      const id = action.payload;
+
+      const items = state.cartItems || [];
+
+      state.cartItems = items.filter((item) => item.id !== id);
+
+      recalcCart(state);
+    },
+
+    // ✅ INCREASE QTY
+    increaseQty: (state, action) => {
+      const id = action.payload;
+
+      const item = state.cartItems?.find((i) => i.id === id);
+      if (item) {
+        item.quantity += 1;
+      }
+
+      recalcCart(state);
+    },
+
+    // ✅ DECREASE QTY
+    decreaseQty: (state, action) => {
+      const id = action.payload;
+
+      const item = state.cartItems?.find((i) => i.id === id);
+      if (!item) return;
+
+      if (item.quantity > 1) {
+        item.quantity -= 1;
+      } else {
+        state.cartItems = state.cartItems.filter(
+          (i) => i.id !== id
+        );
+      }
+
+      recalcCart(state);
+    },
+
+    // ✅ CLEAR CART
+    clearCart: (state) => {
+      state.cartItems = [];
+      state.totalProducts = 0;
+      state.totalQuantity = 0;
+      state.totalAmount = 0;
+    }
+  }
+});
+
+
+// 🔥 HELPER FUNCTION (BEST PRACTICE)
+const recalcCart = (state) => {
+  const items = state.cartItems || [];
+
+  state.totalProducts = items.length;
+
+  state.totalQuantity = items.reduce(
+    (sum, item) => sum + (item.quantity || 1),
+    0
+  );
+
+  state.totalAmount = items.reduce(
+    (sum, item) => sum + item.price * (item.quantity || 1),
+    0
+  );
+};
+
+export const {
+  addItem,
+  removeItem,
+  increaseQty,
+  decreaseQty,
+  clearCart
+} = cartSlice.actions;
+
+export default cartSlice.reducer;

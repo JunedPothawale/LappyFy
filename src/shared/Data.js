@@ -4,8 +4,17 @@ const products = [
         name: "Xiaomi Mi Band 5",
         category: "Watches",
         price: 199,
+        oldPrice: 299,
+        discription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        color: "red",
         rating: 4,
-        image: "https://placehold.co/600x600",
+        image: "https://placehold.co/600x601",
+        images: [
+            "https://placehold.co/600x600",
+            "https://placehold.co/600x600",
+            "https://picsum.photos/600/600"
+        ],
+
         brand: "Apple",
         isNew: true
     },

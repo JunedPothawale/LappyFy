@@ -1,4 +1,10 @@
+import { useDispatch } from "react-redux";
+import { addItem } from "../Cart/Slicer/cartSlice";
+import { Link } from "react-router-dom";
+
 const ProductList = ({ products }) => {
+    const dispatch = useDispatch()
+
     return (
         <div className="row">
             {products.map((p) => (
@@ -25,7 +31,7 @@ const ProductList = ({ products }) => {
 
                                     {/* HOVER BUTTON */}
                                     <div className="button">
-                                        <a href="/cart" className="btn">
+                                        <a onClick={() => dispatch(addItem(p))} className="btn">
                                             <i className="lni lni-cart"></i> Add to Cart
                                         </a>
                                     </div>
@@ -34,12 +40,12 @@ const ProductList = ({ products }) => {
 
                             {/* INFO SECTION */}
                             <div className="col-lg-8 col-md-8 col-12">
-                                <div className="product-info">
+                                <Link to={`/product-details/${p.name}/${p.id}`} className="product-info">
 
                                     <span className="category">{p.category}</span>
 
                                     <h4 className="title">
-                                        <a href="#">{p.name}</a>
+                                        <p>{p.name}</p>
                                     </h4>
 
                                     {/* RATING */}
@@ -70,7 +76,7 @@ const ProductList = ({ products }) => {
                                         )}
                                     </div>
 
-                                </div>
+                                </Link>
                             </div>
 
                         </div>

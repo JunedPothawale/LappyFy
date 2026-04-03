@@ -1,66 +1,27 @@
-
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import Breadcrumbs from "../../../widgets/Breadcrumbs";
-
-
+import {
+    removeItem,
+    increaseQty,
+    decreaseQty
+} from "../../../modules/customer/Cart/Slicer/cartSlice";
 
 const Cart = () => {
-    const [cartItems, setCartItems] = useState([
-        {
-            id: 1,
-            name: "Canon EOS M50 Mirrorless Camera",
-            image: "https://placehold.co/220x200",
-            type: "Mirrorless",
-            color: "Black",
-            price: 910,
-            discount: 29,
-            quantity: 1
-        },
-        {
-            id: 2,
-            name: "Apple iPhone X 256 GB Space Gray",
-            image: "https://placehold.co/220x200",
-            memory: "256 GB",
-            color: "Space Gray",
-            price: 1100,
-            discount: 0,
-            quantity: 1
-        },
-        {
-            id: 3,
-            name: "HP LaserJet Pro Laser Printer",
-            image: "https://placehold.co/220x200",
-            type: "Laser",
-            color: "White",
-            price: 550,
-            discount: 0,
-            quantity: 1
-        }
-    ]);
+    const dispatch = useDispatch();
 
-    // Handle quantity change
-    const handleQuantityChange = (id, qty) => {
-        setCartItems(items =>
-            items.map(item =>
-                item.id === id ? { ...item, quantity: Number(qty) } : item
-            )
-        );
-    };
+    // ✅ get cart from redux
+    const { cartItems, totalAmount } = useSelector((state) => state.cart);
 
-    // Remove item
-    const removeItem = (id) => {
-        setCartItems(items => items.filter(item => item.id !== id));
-    };
+    // ✅ safety (important)
+    const items = Array.isArray(cartItems) ? cartItems : [];
 
-    // Calculations
-    const subtotal = cartItems.reduce(
-        (acc, item) => acc + item.price * item.quantity,
-        0
-    );
+    // ✅ calculations
+    const subtotal = totalAmount;
 
-    const discountTotal = cartItems.reduce(
-        (acc, item) => acc + item.discount,
+    const discountTotal = items.reduce(
+        (acc, item) => acc + (item.discount || 0),
         0
     );
 
@@ -68,7 +29,6 @@ const Cart = () => {
 
     return (
         <>
-
             {/* Breadcrumbs */}
             <Breadcrumbs
                 title="Cart"
@@ -95,7 +55,7 @@ const Cart = () => {
                     </div>
 
                     {/* Items */}
-                    {cartItems.map(item => (
+                    {items.map(item => (
                         <div key={item.id} className="cart-single-list">
                             <div className="row align-items-center">
 
@@ -114,13 +74,21 @@ const Cart = () => {
                                     </p>
                                 </div>
 
+                                {/* ✅ Quantity */}
                                 <div className="col-lg-2">
                                     <select
                                         className="form-control"
                                         value={item.quantity}
-                                        onChange={(e) =>
-                                            handleQuantityChange(item.id, e.target.value)
-                                        }
+                                        onChange={(e) => {
+                                            const newQty = Number(e.target.value);
+                                            const currentQty = item.quantity;
+
+                                            if (newQty > currentQty) {
+                                                dispatch(increaseQty(item.id));
+                                            } else {
+                                                dispatch(decreaseQty(item.id));
+                                            }
+                                        }}
                                     >
                                         {[1, 2, 3, 4, 5].map(q => (
                                             <option key={q} value={q}>{q}</option>
@@ -128,18 +96,21 @@ const Cart = () => {
                                     </select>
                                 </div>
 
+                                {/* Subtotal */}
                                 <div className="col-lg-2">
-                                    <p>${(item.price * item.quantity).toFixed(2)}</p>
+                                    <p>${(item.price * (item.quantity || 1)).toFixed(2)}</p>
                                 </div>
 
+                                {/* Discount */}
                                 <div className="col-lg-2">
                                     <p>{item.discount ? `$${item.discount}` : "—"}</p>
                                 </div>
 
+                                {/* Remove */}
                                 <div className="col-lg-1">
                                     <button
                                         className="remove-item"
-                                        onClick={() => removeItem(item.id)}
+                                        onClick={() => dispatch(removeItem(item.id))}
                                     >
                                         <i className="lni lni-close"></i>
                                     </button>
@@ -183,7 +154,6 @@ const Cart = () => {
 
                 </div>
             </div>
-
         </>
     );
 };
